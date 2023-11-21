@@ -9,6 +9,6 @@ def edit_file(firstname, surname, password):
 
 firstname = input("Please enter your Firstname: ")
 surname = input("Please enter your Surname: ")
-password = input("Please enter a Pasword: ")
+password = input("Please enter a Password: ")
 
 edit_file(firstname, surname, password)
