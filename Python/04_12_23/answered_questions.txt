@@ -1,8 +1,25 @@
-Question: What is the capital of France?
-User Answer: Paris
-Correct Answer: Paris
+Question: What is 4 x 10?
+User Answer: 40
+Correct Answer: 40
 
 Question: What is 2 + 2?
-User Answer: 5
+User Answer: 4
 Correct Answer: 4
+
+Question: What is 30 - 25.4?
+User Answer: 4.6
+Correct Answer: 4.6
+
+Question: What is 15 / 5?
+User Answer: 3
+Correct Answer: 3
+
+Question: What is the sum of the first 50th term of folowing arimethic sequence? 
+10+18+36
+User Answer: 10300
+Correct Answer: 10300
+
+Question: What is the square root of π^2?
+User Answer: Pi
+Correct Answer: Pi
 
