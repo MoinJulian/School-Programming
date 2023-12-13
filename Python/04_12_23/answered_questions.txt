@@ -20,6 +20,6 @@ User Answer: 10300
 Correct Answer: 10300
 
 Question: What is the square root of π^2?
-User Answer: Pi
+User Answer: pi
 Correct Answer: Pi
 
