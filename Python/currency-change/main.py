@@ -21,18 +21,19 @@ conversion_rates = {
     "NZD_TO_USD": 0.61
 }
 
-
 def perform_currency_conversion():
-    choice = choice_var.get()
+    selected_value = choice_combobox.get()
     amount = amount_entry.get()
+
+    # Reverse the get_fullname function to get the original key
+    choice = get_original_key(selected_value)
 
     if choice in conversion_rates:
         try:
             result_currency = choice[-3:]
             result_amount = calculate_conversion(float(amount), conversion_rates[choice])
 
-            result_label.config(
-                text=f"{amount} {choice.split('_')[0]} is equal to {result_amount:.2f} {result_currency}")
+            result_label.config(text=f"{amount} {get_fullname(choice)} is equal to {result_amount:.2f} {get_fullname(result_currency)}")
 
             # Open a browser to display the result on Google
             google_search_url = f"https://google.com/search?q={amount}+{choice.split('_')[0]}+{result_currency}"
@@ -43,25 +44,51 @@ def perform_currency_conversion():
     else:
         result_label.config(text="Invalid choice. Please select a valid conversion.")
 
-
 def calculate_conversion(amount, exchange_rate):
     return amount * exchange_rate
 
+def get_fullname(conversion_key):
+    parts = conversion_key.split('_')
+    if len(parts) == 3:
+        from_currency, to_currency = parts[0], parts[2]
+        return f"{get_currency_name(from_currency)} to {get_currency_name(to_currency)}"
+    else:
+        return conversion_key
+
+def get_currency_name(currency_code):
+    currency_names = {
+        "USD": "US Dollar",
+        "EUR": "Euro",
+        "GBP": "British Pound",
+        "YEN": "Japanese Yen",
+        "SEK": "Swedish Krona",
+        "CAD": "Canadian Dollar",
+        "AUD": "Australian Dollar",
+        "CHF": "Swiss Franc",
+        "NZD": "New Zealand Dollar"
+    }
+    return currency_names.get(currency_code, currency_code)
+
+def get_original_key(selected_value):
+    # Reverse the get_fullname function to get the original key
+    for key, value in conversion_rates.items():
+        if get_fullname(key) == selected_value:
+            return key
 
 # Create main window
 root = tk.Tk()
 root.title("Currency Converter")
 
 # Create widgets
-info_label = ttk.Label(root,
-                       text="Please note that this program is not using an API and therefore can't have up-to-date information.")
+info_label = ttk.Label(root, text="Please note that this program is not using an API and therefore can't have up-to-date information.")
 info_label.grid(row=0, column=0, columnspan=2, pady=10)
 
 choice_label = ttk.Label(root, text="Select conversion:")
 choice_label.grid(row=1, column=0, pady=5, sticky="e")
 
 choice_var = tk.StringVar()
-choice_combobox = ttk.Combobox(root, textvariable=choice_var, values=list(conversion_rates.keys()), state="readonly")
+# Display conversion options with currency names spelled out
+choice_combobox = ttk.Combobox(root, textvariable=choice_var, values=[get_fullname(key) for key in conversion_rates.keys()], state="readonly")
 choice_combobox.grid(row=1, column=1, pady=5)
 
 amount_label = ttk.Label(root, text="Enter amount:")
