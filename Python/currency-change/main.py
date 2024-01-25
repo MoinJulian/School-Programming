@@ -1,3 +1,12 @@
+import webbrowser
+from tkinter import *
+
+
+root = Tk()
+root.title("WebBrowsers")
+
+root.geometry("640x480")
+
 def print_info():
     print("Please not that this program is not using an API and therefore can't have the up to date information")
 
@@ -64,6 +73,8 @@ def main():
             amount = float(input(f"Enter the amount to convert from {choice_key.split('_')[0]}: "))
             result_currency = choice_key[-3:]
             result_amount = convert_currency(amount, conversion_rates[choice_key])
+            print("You can click on the link below to see the information on google:")
+            webbrowser.open(f"https://google.com/search?q={amount}+{choice_key.split('_')[0]}+{result_currency}")
             print(f"{amount} {choice_key.split('_')[0]} is equal to {result_amount:.2f} {result_currency}")
         except ValueError:
             print("Invalid input. Please enter a valid numeric amount.")
