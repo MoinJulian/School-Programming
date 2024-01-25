@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import webbrowser
-from currency_utils import get_fullname, get_currency_name, get_original_key
+from currency_utils import get_fullname
 from currency_conversion import perform_currency_conversion
 
 conversion_rates = {
@@ -22,6 +22,11 @@ conversion_rates = {
     "USD_TO_NZD": 1.63,
     "NZD_TO_USD": 0.61
 }
+
+
+def open_github():
+    github_url = "https://github.com/MoinJulian/School-Programming"
+    webbrowser.open(github_url)
 
 
 def main():
@@ -57,6 +62,9 @@ def main():
 
     result_link = ttk.Label(root, text="")
     result_link.grid(row=5, column=0, columnspan=2, pady=5)
+
+    button = ttk.Button(root, text="GitHub", command=open_github)
+    button.grid(row=6, column=0, columnspan=2, pady=20)
 
     root.mainloop()
 
