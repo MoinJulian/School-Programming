@@ -1,3 +1,5 @@
+import tkinter as tk
+from tkinter import ttk
 import webbrowser
 
 conversion_rates = {
@@ -20,41 +22,62 @@ conversion_rates = {
 }
 
 
-def print_info():
-    print("Please note that this program is not using an API and therefore can't have up-to-date information.")
+def perform_currency_conversion():
+    choice = choice_var.get()
+    amount = amount_entry.get()
+
+    if choice in conversion_rates:
+        try:
+            result_currency = choice[-3:]
+            result_amount = calculate_conversion(float(amount), conversion_rates[choice])
+
+            result_label.config(
+                text=f"{amount} {choice.split('_')[0]} is equal to {result_amount:.2f} {result_currency}")
+
+            # Open a browser to display the result on Google
+            google_search_url = f"https://google.com/search?q={amount}+{choice.split('_')[0]}+{result_currency}"
+            result_link.config(text="Click here to see the information on Google")
+            result_link.bind("<Button-1>", lambda event: webbrowser.open(google_search_url))
+        except ValueError:
+            result_label.config(text="Invalid input. Please enter a valid numeric amount.")
+    else:
+        result_label.config(text="Invalid choice. Please select a valid conversion.")
 
 
-def print_menu():
-    for i, key in enumerate(conversion_rates, start=1):
-        target_currency = key.split('_')[-1]
-        print(f"{i}. Convert from Dollar to {target_currency}")
-
-
-def convert_currency(amount, exchange_rate):
+def calculate_conversion(amount, exchange_rate):
     return amount * exchange_rate
 
 
-def main():
-    print_info()
-    print_menu()
-    choice = input("Enter your choice (1-16): ")
+# Create main window
+root = tk.Tk()
+root.title("Currency Converter")
 
-    if choice.isdigit() and 1 <= int(choice) <= 16:
-        try:
-            choice_key = list(conversion_rates.keys())[int(choice) - 1]
-            amount = float(input(f"Enter the amount to convert from {choice_key.split('_')[0]}: "))
-            result_currency = choice_key[-3:]
-            result_amount = convert_currency(amount, conversion_rates[choice_key])
-            print(f"{amount} {choice_key.split('_')[0]} is equal to {result_amount:.2f} {result_currency}")
+# Create widgets
+info_label = ttk.Label(root,
+                       text="Please note that this program is not using an API and therefore can't have up-to-date information.")
+info_label.grid(row=0, column=0, columnspan=2, pady=10)
 
-            # Open a browser to display the result on Google
-            print("You can click on the link below to see the information on Google:")
-            webbrowser.open(f"https://google.com/search?q={amount}+{choice_key.split('_')[0]}+{result_currency}")
-        except ValueError:
-            print("Invalid input. Please enter a valid numeric amount.")
-    else:
-        print("Invalid choice. Please enter a number between 1 and 16.")
+choice_label = ttk.Label(root, text="Select conversion:")
+choice_label.grid(row=1, column=0, pady=5, sticky="e")
 
+choice_var = tk.StringVar()
+choice_combobox = ttk.Combobox(root, textvariable=choice_var, values=list(conversion_rates.keys()), state="readonly")
+choice_combobox.grid(row=1, column=1, pady=5)
 
-if __name__ == "__main__":
-    main()
+amount_label = ttk.Label(root, text="Enter amount:")
+amount_label.grid(row=2, column=0, pady=5, sticky="e")
+
+amount_entry = ttk.Entry(root)
+amount_entry.grid(row=2, column=1, pady=5)
+
+convert_button = ttk.Button(root, text="Convert", command=perform_currency_conversion)
+convert_button.grid(row=3, column=0, columnspan=2, pady=10)
+
+result_label = ttk.Label(root, text="")
+result_label.grid(row=4, column=0, columnspan=2, pady=10)
+
+result_link = ttk.Label(root, text="")
+result_link.grid(row=5, column=0, columnspan=2, pady=5)
+
+# Run the application
+root.mainloop()
