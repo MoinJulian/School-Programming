@@ -1,12 +1,33 @@
 import webbrowser
-from currency_utils import get_fullname, get_original_key, get_currency_name
+from currency_utils import get_fullname, get_original_key
 
 
 def calculate_conversion(amount, exchange_rate):
+    """
+    Calculate the converted amount based on the given exchange rate.
+
+    Parameters:
+        amount (float): The amount to be converted.
+        exchange_rate (float): The exchange rate for the conversion.
+
+    Returns:
+        float: The converted amount.
+    """
     return amount * exchange_rate
 
 
 def perform_currency_conversion(choice_var, choice_combobox, amount_entry, result_label, result_link, conversion_rates):
+    """
+    Perform currency conversion based on user input and display the result.
+
+    Parameters:
+        choice_var (tk.StringVar): The variable holding the selected conversion choice.
+        choice_combobox (ttk.Combobox): The combobox widget for selecting conversion.
+        amount_entry (ttk.Entry): The entry widget for entering the amount.
+        result_label (ttk.Label): The label widget to display the conversion result.
+        result_link (ttk.Label): The label widget to display the link for more information.
+        conversion_rates (dict): Dictionary containing conversion rates.
+    """
     choice = choice_var.get()
     selected_value = choice_combobox.get()
     amount = amount_entry.get()
