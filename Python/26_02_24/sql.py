@@ -7,4 +7,9 @@ c = mydb.cursor()
 # Create table
 c.execute("CREATE TABLE Students (student_firstname TEXT, student_surname TEXT, student_age TEXT, Form TEXT)")
 
-print("Table created successfully")
+c.execute("SELECT students FROM Students")
+row = c.fetchall()
+print(row)
+
+mydb.commit()
+mydb.close()
