@@ -1,0 +1,18 @@
+questions = List of Questions
+possible_answers = ["a", "b", "c", "d"]
+
+Function AskQuestion(questions)
+    score = 0
+    FOR question in questions:
+        answer = INPUT question
+        IF possible_answers !includes answer 
+            OUTPUT "You must choose one of the options given"
+        ENDIF
+        IF answer == question[1]:
+            OUTPUT "Correct"
+        ELSE:
+            OUTPUT "Incorrect"
+        ENDIF
+    RETURN score
+
+score = AskQuestion
