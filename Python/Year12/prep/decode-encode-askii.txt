@@ -1,0 +1,37 @@
+FUNCTION convertStringToAscii(input_string)
+    output = ""
+
+    FOR char IN input_string
+        output += (string unicode character of char) + ""
+    END FOR
+    RETURN output with removed leading and following whitespaces
+
+FUNCTION convertAsciiToString(input_ascii)
+    output = ""
+    ascii_array = input_ascii split after each whitespace
+
+    FOR element IN ascii_array
+        output += (element to number) convert from ascii to string
+    END FOR
+    RETURN output
+
+FUNCTION main()
+    WHILE true
+        choice = inter of input("1. Convert String To ASCII | 2. Convert ASCII to String | 3. Exit")
+
+        IF choice == 1
+            input_string = input("Enter a string you want to convert to ASCII: ")
+            ascii_result = convertStringToAscii(input_string)
+            OUTPUT ascii_result
+        ELSE IF choice == 2
+            input_ascii = input("Enter ASCII you want to convert to a string: ")
+            string_result = convertAsciiToString(input_ascii)
+            OUTPUT string_result
+        ELSE IF choice == 3
+            exit
+        ELSE
+            OUTPUT "You must enter a number between 1 and 3"
+        ENDIF
+    END WHILE
+
+main()

@@ -12,13 +12,23 @@ def convertAsciiToString(input_ascii: str) -> str:
         output += chr(int(element))
     return output
 
+def main():
+    while True:
+        choice = int(input("1. Convert String To ASCII | 2. Convert ASCII to String | 3. Exit"))
 
-# Test the functions
-input_string = input("Enter a string to convert to ASCII: ")
-ascii_result = convertStringToAscii(input_string)
+        if choice == 1:
+            input_string = input("Enter a string you want to convert to ASCII: ")
+            ascii_result = convertStringToAscii(input_string)
+            print("Converted to ASCII: ", ascii_result)
+        if choice == 2:
+            input_ascii = input("Enter ASCII you want to convert to a string: ")
+            string_result = convertAsciiToString(input_ascii)
+            print("Converted to string", string_result)
+        if choice == 3:
+            break
+        else:
+            print("Please enter a value between 1 and 3.")
 
-ascii_input = input("Enter ASCII to convert to string: ")
-string_result = convertAsciiToString(ascii_input)
 
-print("Converted to ASCII:", ascii_result)
-print("Converted back to String:", string_result)
+if __name__ == '__main__':
+    main()
