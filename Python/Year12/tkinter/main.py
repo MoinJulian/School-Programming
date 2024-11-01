@@ -1,8 +1,9 @@
 ### Add a demostration of all core tkinter widgets
 
 from tkinter import *
+from __future__ import annotations
 
-root = Tk()
+root: Tk = Tk()
 root.title("I am a Top Level Widget, parent for other widtgets")
 
 # my_label = Label(root, text="I am a label widget")
