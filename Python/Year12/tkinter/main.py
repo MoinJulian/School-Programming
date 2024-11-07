@@ -1,36 +1,23 @@
-### Add a demostration of all core tkinter widgets
-
-from tkinter import *
 from __future__ import annotations
+from tkinter import *
 
-root: Tk = Tk()
-root.title("I am a Top Level Widget, parent for other widtgets")
+window: Tk = Tk()
+window.title("My first UI")
 
-# my_label = Label(root, text="I am a label widget")
-# my_label.pack()
+Label(window, text="Enter Text Here: ").grid(row=0, column=0, sticky=W)
 
-# my_button = Button(root, text="I am a button")
-# my_button.pack()
+entry_1 = Entry(window, width=20, bg="light blue", fg="black")
+entry_1.grid(row=1, column=0, sticky=W)
 
-# Create a frame widget for placing menu
-my_menu_bar = Frame(root, relief="raised", bd=2)
-my_menu_bar.pack(fill = X)
+def buttonClick(): 
+    entered_text = entry_1.get()
+    output_text.delete(0.0, END)
+    manipulated_text = "You have typed: " + entered_text
+    output_text.insert(END, manipulated_text)
 
-# Create Menu Widget 1 and Sub Menu 1
-my_menu_button = Menubutton(my_menu_bar, text = "Menu Button Widget 1")
-my_menu_button.pack(side = LEFT)
+Button(window, text="Submit", width=5, command=buttonClick).grid(row=2, column=0, sticky=W)
 
-# Menu Widget
-my_menu = Menu(my_menu_button, tearoff=0)
-my_menu_button["menu"] = my_menu
-my_menu.add("command", label = "Sub Menu") # Add Sub Menu
+output_text = Text(window, width=75 ,height=6, wrap=WORD, bg="light blue", fg="black")
+output_text.grid(row=3, columnspan=2, sticky=W)
 
-# Create Menu2 and Submenu 2
-menu_button_2 = Menubutton(my_menu_bar, text = "Menu 2")
-menu_button_2.pack(side = LEFT)
-
-my_menu_2 = Menu(menu_button_2, tearoff=0)
-menu_button_2["menu"] = my_menu_2
-my_menu_2.add("command", label = "Sub Menu 2") # Add Sub Menu 2
-
-root.mainloop()
+window.mainloop()
