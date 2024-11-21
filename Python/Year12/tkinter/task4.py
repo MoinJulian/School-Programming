@@ -14,6 +14,7 @@ def format_button_label(key):
     return " ".join(word.upper() if word in {"cpu", "io"} else word.title() for word in words)
 
 def get_and_display_text(key):
+    """Gets the definition text and siplays it in the output textfield"""
     output_text.delete(1.0, END)
     definition = flash_cards.get(key, "Definition not found.")
     output_text.insert(END, definition)
