@@ -18,7 +18,6 @@ y_vel = 5
 
 def move():
     global x, y, x_vel, y_vel, key_down
-
     if key_down == True:
         canvas_1.move(circle, x_vel, y_vel)
     window.after(33, move)

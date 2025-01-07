@@ -1,0 +1,111 @@
+FUNCTION loadUserData(filename)
+    TRY
+        READ JSON file and RETURN data
+    CATCH FileNotFoundError
+        RETURN empty dictionary
+
+FUNCTION saveUserData(filename)
+    WRITE user_data to JSON file
+
+GLOBAL VARIABLES:
+    user_data <- loadUserData()
+    current_user <- NULL
+
+FUNCTION authenticateUser(card_number, pin)
+    IF card_number EXISTS in user_data AND user_data[card_number]["pin"] == pin
+        SET current_user <- card_number
+        RETURN TRUE
+    ELSE
+        RETURN FALSE
+
+FUNCTION displayBalance()
+    FETCH balance FROM user_data[current_user]
+    SHOW message with current balance
+
+FUNCTION transferMoney()
+    FETCH balance FROM user_data[current_user]
+    SHOW transfer money screen
+    INPUT recipient card number and amount
+    IF recipient EXISTS in user_data
+        UPDATE balances of current_user and recipient
+        saveUserData()
+        SHOW success message
+    ELSE
+        SHOW error message
+
+FUNCTION withdrawMoney()
+    FETCH balance FROM user_data[current_user]
+    SHOW withdraw money screen
+    INPUT amount to withdraw
+    IF amount <= current_user balance
+        UPDATE balance
+        saveUserData()
+        SHOW success message
+    ELSE
+        SHOW error message
+
+FUNCTION depositMoney()
+    FETCH balance FROM user_data[current_user]
+    SHOW deposit money screen
+    INPUT deposit amount
+    UPDATE balance
+    saveUserData()
+    SHOW success message
+
+FUNCTION payBills()
+    FETCH balance FROM user_data[current_user]
+    SHOW pay bills screen
+    INPUT amount to pay
+    IF amount <= current_user balance
+        UPDATE balance
+        saveUserData()
+        SHOW success message
+    ELSE
+        SHOW error message
+
+FUNCTION changePin()
+    FETCH current PIN FROM user_data[current_user]
+    SHOW change PIN screen
+    INPUT current PIN and new PIN
+    IF current PIN matches user_data[current_user]["pin"]
+        UPDATE PIN
+        saveUserData()
+        SHOW success message
+    ELSE
+        SHOW error message
+
+FUNCTION terminateAccount()
+    SHOW terminate account screen
+    INPUT PIN
+    IF PIN matches user_data[current_user]["pin"]
+        DELETE user_data[current_user]
+        saveUserData()
+        SHOW success message
+        EXIT main menu
+    ELSE
+        SHOW error message
+
+FUNCTION handleLogin()
+    INPUT card number and PIN
+    IF authenticateUser(card_number, pin)
+        SHOW login success message
+        CLOSE login screen
+        CALL mainMenu()
+    ELSE
+        SHOW login error message
+
+FUNCTION mainMenu()
+    SHOW main menu screen
+    DISPLAY options:
+        - Balance Enquiry -> CALL displayBalance()
+        - Transfer Money -> CALL transferMoney()
+        - Deposit Money -> CALL depositMoney()
+        - Pay Bills -> CALL payBills()
+        - Change PIN -> CALL changePin()
+        - Withdraw Money -> CALL withdrawMoney()
+        - Terminate Account -> CALL terminateAccount()
+        - Exit -> CLOSE main menu
+
+INITIALIZE loginScreen
+SHOW login screen
+WAIT FOR user input
